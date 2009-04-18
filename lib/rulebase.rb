@@ -1,6 +1,5 @@
 module FuzzyRealty
-  attr_reader :methods
-  @methods = {
+  METHODS = {
     # Price is match when desired is 90-105%  of actual. Otherwise give a
     # reduced factor.
     :price => 
@@ -22,8 +21,7 @@ module FuzzyRealty
       end
   }
   
-  attr_reader :weights
-  @weights = {
+  WEIGHTS = {
     :sqft => 5, 
     :price => 10, 
     :location => 25
