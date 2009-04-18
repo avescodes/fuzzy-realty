@@ -1,0 +1,7 @@
+= fuzzy-realty
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) 2009 Ryan Neufeld. See LICENSE for details.
