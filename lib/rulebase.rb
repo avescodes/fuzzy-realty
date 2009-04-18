@@ -62,6 +62,9 @@ module FuzzyRealty
     :D => {:A => 0.0,  :B => 0.1,  :C => 0.6, :D => 1.0}
   }
 
+  # Table for lookup of score of desired and actual styles
+  # -- Arbitrary values provied by my wife
+  #
   # Bu = Bungalow, Bi = Bilevel, Sp = Splitlevel, Tw = Two Story, Co = Condo
   #|    |   Bu |  Sp |  Tw |   Bi |  Co |
   #| Bu |    1 | 0.4 | 0.8 | 0.65 | 0.1 |
