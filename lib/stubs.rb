@@ -1,6 +1,6 @@
 module FuzzyRealty
   class Listing
-    attr_accessor :price, :sqft, :location
+    attr_accessor :price, :sqft, :location, :style
     def initialize(values={})
       values.each_key {|k| instance_variable_set(:"@#{k}", values[k])}
     end
@@ -15,7 +15,7 @@ module FuzzyRealty
   
   class Parameter
     attr_accessor :required, :type, :desired
-    def initialize(required,type,desired)
+    def initialize(type,desired,required=false)
       @required,@type,@desired = required, type, desired
     end
   end

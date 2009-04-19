@@ -4,7 +4,7 @@ module FuzzyRealty
     # reduced factor.
     :price => 
       lambda do |listing,param| 
-        actual,desired = param.desired,listing.price.to_f
+        actual,desired = listing.price.to_f, param.desired
         if (desired*0.90..desired*1.05) === actual
           1
         else 
@@ -23,7 +23,19 @@ module FuzzyRealty
     :bathroom => 1,
     :garage => 1,
     :deck => 1,
-    :sqft => 1,
+    :sqft => 
+      lambda do |listing,param|
+        actual, desired = listing.sqft, param.value
+        if (actual - 50) >= desired
+          1
+        elsif (actual - 150) >= desired
+          0.8
+        elsif (actual - 300) >= desired
+          0.5
+        else
+          0
+        end
+      end,
     # Style's follow lookup table similar to Location
 
     :style => 
@@ -41,7 +53,8 @@ module FuzzyRealty
   WEIGHTS = {
     :sqft => 15, 
     :price => 10, 
-    :location => 25
+    :location => 25,
+    :style => 18
   }
 
   # Table for looking up score of relative locations
@@ -63,7 +76,7 @@ module FuzzyRealty
   }
 
   # Table for lookup of score of desired and actual styles
-  # -- Arbitrary values provied by my wife
+  # - Arbitrary values provied by my wife, at present the leanings aren't quite right
   #
   # Bu = Bungalow, Bi = Bilevel, Sp = Splitlevel, Tw = Two Story, Co = Condo
   #|    |   Bu |  Sp |  Tw |   Bi |  Co |
