@@ -9,14 +9,14 @@ module FuzzyRealty
     # reduced factor.
     :price => 
       lambda do |listing,param| 
-        puts "Called price"
+        puts "Called price" if $debug
         actual,desired = listing.price.to_f, param.desired
         result = if (desired*0.90..desired*1.05) === actual
           1.0
         else 
           1 - ((desired - actual) / actual).abs
         end
-        puts result
+        puts result if $debug
         result
       end,
   
@@ -24,15 +24,15 @@ module FuzzyRealty
     ## Currently just return 1 if exact, 0 otherwise
     :location => 
       lambda do |listing,param|
-        puts "Called location"
+        puts "Called location" if $debug
         # Perform a quick lookup (i.e. FuzzyRealty::LOCN[:A][:A] => 1.0)
-        puts FuzzyRealty::LOCN[param.desired.to_sym][listing.location.to_sym]
+        puts FuzzyRealty::LOCN[param.desired.to_sym][listing.location.to_sym] if $debug
         FuzzyRealty::LOCN[param.desired.to_sym][listing.location.to_sym]
       end,
       
     :sqft => 
       lambda do |listing,param|
-                puts "Called sqft"
+                puts "Called sqft" if $debug
         actual, desired = listing.sqft, param.desired
         result = if (actual + 50) >= desired
           1.0
@@ -43,17 +43,17 @@ module FuzzyRealty
         else
           0.0
         end
-        puts result
+        puts result if $debug
         result
       end,
     # Style's follow lookup table similar to Location
 
     :style => 
       lambda do |listing,param|
-                puts "Called style"
+                puts "Called style" if $debug
         desired = FuzzyRealty::STYLE[:Symbol][param.desired]
         actual  = FuzzyRealty::STYLE[:Symbol][listing.style]
-        puts FuzzyRealty::STYLE[desired][actual]
+        puts FuzzyRealty::STYLE[desired][actual] if $debug
         FuzzyRealty::STYLE[desired][actual]
       end
   }

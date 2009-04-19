@@ -4,6 +4,9 @@ require 'weights.rb'
 require 'rulebase.rb'
 require 'rulebase.rb'
 
+# If set this flag will turn on debugging printouts
+#$debug = true;
+
 module FuzzyRealty
   class ExpertSystem
     def self.scores(listings, query)
