@@ -9,6 +9,7 @@ module FuzzyRealty
     :location => 25,
     :style => 18
   }
+  
   def self.max_score
     WEIGHTS.inject(0) {|sum,n| sum + n[1]}
   end

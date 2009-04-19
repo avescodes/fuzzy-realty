@@ -8,15 +8,37 @@ module FuzzyRealty
   
   class Query
     attr_accessor :params
-    def initialize(params)
+    def initialize(params=[])
       @params = params
+    end
+    def << (param)
+      if !param.is_a?(Parameter)
+        raise "Attempting to add non-Parameter to Query" 
+      end
+      @params << param
+        
     end
   end
   
   class Parameter
     attr_accessor :required, :type, :desired, :style
     def initialize(type,desired,required=false)
-      @required,@type,@desired = required, type, desired
+      if !Parameter.valid_types.contains(type)
+        raise "Attempting to create non-existant Parameter type" 
+      end
+      @type     = type
+      @desired  = desired
+      @required = required
     end
+    
+    def self.valid_types
+      FuzzyRealty::WEIGHTS.each_key.to_a
+    end
+  end
+end
+
+class Array
+  def contains(value)
+    self.any? {|array_value| array_value == value }
   end
 end

@@ -1,2 +1,21 @@
-Listing Model needs:
-* "location" as string
+Stef, this is what I have:
+
+require fuzzy_realty then issue a query like so:
+query = FuzzyRealty::Query.new
+query << FuzzyRealty::Parameter(:"symbol type", value)
+...
+FuzzyRealty::ExpertSystem.scores(listings_array,query)
+
+you will receive an array of hashes arranged like so:
+[ {:listing => #<...>, :score => ###}, ...]
+
+
+Parameters
+==========
+Parameters are init'd with a symbol type and value
+| Type      | Value                                                          |
+| :sqft     | Numeric                                                        |
+| :style    | One of %W{Bungalow Bi-level Split-level Two-story Condominium} |
+| :location | One of %W{A B C D}                                             |
+| :price    | Numeric                                                        |
+* Values for style and location are very sensitive atm, anything not in the two will likely not work or even error out (i've tried to avoid the erroring out)
