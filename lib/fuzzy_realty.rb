@@ -1,4 +1,7 @@
 require 'stubs.rb'
+require 'scores_table.rb'
+require 'weights.rb'
+require 'rulebase.rb'
 require 'rulebase.rb'
 
 module FuzzyRealty
@@ -35,11 +38,12 @@ if __FILE__ == $0
     })
   end
   # The user wants price around 110k and in location A, 
-  p1     = FuzzyRealty::Parameter.new(:price,250000)
-  p2     = FuzzyRealty::Parameter.new(:location, 'A',true)
-  p3     = FuzzyRealty::Parameter.new(:style,"Condominium",true)
-  p4     = FuzzyRealty::Parameter.new(:sqft,1575,true)
-  query  = FuzzyRealty::Query.new([p1,p2])
+  parameters = []
+  parameters << FuzzyRealty::Parameter.new(:price,250000)
+  parameters << FuzzyRealty::Parameter.new(:location, 'A',true)
+  parameters << FuzzyRealty::Parameter.new(:style,"Condominium",true)
+  parameters << FuzzyRealty::Parameter.new(:sqft,1575,true)
+  query  = FuzzyRealty::Query.new(parameters)
   scores = FuzzyRealty::ExpertSystem.scores(listings,query)
   scores.each do |score| 
     puts "%.2f" % score[:score] + "\t\t#{score[:listing].inspect}"

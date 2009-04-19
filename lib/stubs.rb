@@ -14,7 +14,7 @@ module FuzzyRealty
   end
   
   class Parameter
-    attr_accessor :required, :type, :desired
+    attr_accessor :required, :type, :desired, :style
     def initialize(type,desired,required=false)
       @required,@type,@desired = required, type, desired
     end
