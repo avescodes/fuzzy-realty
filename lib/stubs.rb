@@ -7,7 +7,7 @@ module FuzzyRealty
   end
   
   class Query
-    attr_accessor :params
+    attr_reader :params
     def initialize(params=[])
       @params = params
     end
@@ -21,7 +21,7 @@ module FuzzyRealty
   end
   
   class Parameter
-    attr_accessor :required, :type, :desired, :style
+    attr_reader :type, :desired, :required
     def initialize(type,desired,required=false)
       if !Parameter.valid_types.contains(type)
         raise "Attempting to create non-existant Parameter type" 
@@ -30,7 +30,6 @@ module FuzzyRealty
       @desired  = desired
       @required = required
     end
-    
     def self.valid_types
       FuzzyRealty::WEIGHTS.each_key.to_a
     end

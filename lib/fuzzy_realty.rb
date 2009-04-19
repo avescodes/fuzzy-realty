@@ -17,7 +17,7 @@ module FuzzyRealty
         score = 0
         query.params.each do |param|
           #calculate score modifier of parameter using indexed method
-          change = FuzzyRealty::METHODS[param.type].call(listing,param)
+          change = FuzzyRealty::RULES[param.type].call(listing,param.desired)
           # if score is bad and parameter is required then reduce it further
           change = (change < 0.70 and param.required) ? (change - 1) : change
           
@@ -30,9 +30,10 @@ module FuzzyRealty
   end
 end
 
+#When running the library directly calculate an example
 if __FILE__ == $0
   listings = []
-  10000.times do |i|
+  100.times do |i|
     listings << FuzzyRealty::Listing.new({
       :price => 20_000 + rand(250_000),
       :sqft => 300 + rand(2000),
@@ -40,7 +41,7 @@ if __FILE__ == $0
       :style => %W{Bungalow Bi-level Split-level Two-story Condominium}[rand(5)]
     })
   end
-  # The user wants price around 110k and in location A, 
+  
   parameters = []
   parameters << FuzzyRealty::Parameter.new(:price,250000)
   parameters << FuzzyRealty::Parameter.new(:location, 'A',true)

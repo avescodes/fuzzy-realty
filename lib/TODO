@@ -13,9 +13,17 @@ you will receive an array of hashes arranged like so:
 Parameters
 ==========
 Parameters are init'd with a symbol type and value
-| Type      | Value                                                          |
-| :sqft     | Numeric                                                        |
+| Type      | Valid Values                                                   |
+| :sqft     | Any Numeric                                                    |
 | :style    | One of %W{Bungalow Bi-level Split-level Two-story Condominium} |
 | :location | One of %W{A B C D}                                             |
-| :price    | Numeric                                                        |
+| :price    | Any Numeric                                                    |
 * Values for style and location are very sensitive atm, anything not in the two will likely not work or even error out (i've tried to avoid the erroring out)
+
+Listings
+========
+What i expect out of a listing is that it has the following properties that can be read from it:
+*price
+*sqft
+*location
+*style

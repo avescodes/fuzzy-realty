@@ -1,16 +1,16 @@
 module FuzzyRealty
-  METHODS = {
+  RULES = {
     # Not yet implemented
-    :bathroom => 1,
+    :bathrooms => 1,
     :garage => 1,
     :deck => 1,
     
     # Price is match when desired is 90-105%  of actual. Otherwise give a
     # reduced factor.
     :price => 
-      lambda do |listing,param| 
+      lambda do |listing,desired| 
         puts "Called price" if $debug
-        actual,desired = listing.price.to_f, param.desired
+        actual = listing.price.to_f
         result = if (desired*0.90..desired*1.05) === actual
           1.0
         else 
@@ -23,17 +23,17 @@ module FuzzyRealty
     # Location calc. does lookup to find score for desired and actual
     ## Currently just return 1 if exact, 0 otherwise
     :location => 
-      lambda do |listing,param|
+      lambda do |listing,desired|
         puts "Called location" if $debug
         # Perform a quick lookup (i.e. FuzzyRealty::LOCN[:A][:A] => 1.0)
-        puts FuzzyRealty::LOCN[param.desired.to_sym][listing.location.to_sym] if $debug
-        FuzzyRealty::LOCN[param.desired.to_sym][listing.location.to_sym]
+        puts FuzzyRealty::LOCN[desired.to_sym][listing.location.to_sym] if $debug
+        FuzzyRealty::LOCN[desired.to_sym][listing.location.to_sym]
       end,
       
     :sqft => 
-      lambda do |listing,param|
+      lambda do |listing,desired|
                 puts "Called sqft" if $debug
-        actual, desired = listing.sqft, param.desired
+        actual = listing.sqft
         result = if (actual + 50) >= desired
           1.0
         elsif (actual + 150) >= desired
@@ -49,9 +49,9 @@ module FuzzyRealty
     # Style's follow lookup table similar to Location
 
     :style => 
-      lambda do |listing,param|
+      lambda do |listing,desired|
                 puts "Called style" if $debug
-        desired = FuzzyRealty::STYLE[:Symbol][param.desired]
+        desired = FuzzyRealty::STYLE[:Symbol][desired]
         actual  = FuzzyRealty::STYLE[:Symbol][listing.style]
         puts FuzzyRealty::STYLE[desired][actual] if $debug
         FuzzyRealty::STYLE[desired][actual]
