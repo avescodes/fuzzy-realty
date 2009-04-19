@@ -1,11 +1,11 @@
 module FuzzyRealty
+  # Stub for testing without Rails project
   class Listing
     attr_accessor :price, :sqft, :location, :style
     def initialize(values={})
       values.each_key {|k| instance_variable_set(:"@#{k}", values[k])}
     end
   end
-  
   class Query
     attr_reader :params
     def initialize(params=[])
@@ -16,7 +16,7 @@ module FuzzyRealty
         raise "Attempting to add non-Parameter to Query" 
       end
       @params << param
-        
+
     end
   end
   

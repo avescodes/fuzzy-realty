@@ -1,6 +1,6 @@
-require 'stubs.rb'
-require 'scores_table.rb'
 require 'weights.rb'
+require 'classes.rb'
+require 'scores_table.rb'
 require 'rulebase.rb'
 
 # If set this flag will turn on debugging printouts
@@ -41,14 +41,30 @@ if __FILE__ == $0
     })
   end
   
-  parameters = []
-  parameters << FuzzyRealty::Parameter.new(:price,250000)
-  parameters << FuzzyRealty::Parameter.new(:location, 'A',true)
-  parameters << FuzzyRealty::Parameter.new(:style,"Condominium",true)
-  parameters << FuzzyRealty::Parameter.new(:sqft,1575,true)
-  query  = FuzzyRealty::Query.new(parameters)
+  query  = FuzzyRealty::Query.new
+  query << FuzzyRealty::Parameter.new(:price,250000)
+  query << FuzzyRealty::Parameter.new(:location, 'A',true)
+  query << FuzzyRealty::Parameter.new(:style,"Condominium",true)
+  query << FuzzyRealty::Parameter.new(:sqft,1575,true)
+
   scores = FuzzyRealty::ExpertSystem.scores(listings,query)
-  scores.each do |score| 
+  puts "Query 1, $250k Condominium in the prestiguous 'A' suburbs. 1575 sq. ft."
+  puts "Top 20 Listings:"
+  scores[(0..20)].each do |score| 
+    puts "%.2f" % score[:score] + "\t\t#{score[:listing].inspect}"
+  end
+  
+  puts "\n"
+  query  = FuzzyRealty::Query.new
+  query << FuzzyRealty::Parameter.new(:price,99_000,true)
+  query << FuzzyRealty::Parameter.new(:location,'C')
+  query << FuzzyRealty::Parameter.new(:style, "Bungalow")
+  query << FuzzyRealty::Parameter.new(:sqft,1200)
+  
+  scores = FuzzyRealty::ExpertSystem.scores(listings,query)
+  puts "Query 2, $99k Bungalow in the ever so average 'C' block. 1200 sq. ft."
+  puts "Top 20 Listings:"
+  scores[(0..20)].each do |score| 
     puts "%.2f" % score[:score] + "\t\t#{score[:listing].inspect}"
   end
 end

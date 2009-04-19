@@ -1,3 +1,4 @@
+require 'scores_table.rb'
 module FuzzyRealty
   RULES = {
     # Not yet implemented
