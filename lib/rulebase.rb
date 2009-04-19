@@ -1,9 +1,10 @@
 module FuzzyRealty
   RULES = {
     # Not yet implemented
-    :bathrooms => 1,
-    :garage => 1,
-    :deck => 1,
+    #:bathrooms => ,
+    #:bedrooms => ,
+    #:garage => ,
+    #:deck => ,
     
     # Price is match when desired is 90-105%  of actual. Otherwise give a
     # reduced factor.

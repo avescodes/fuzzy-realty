@@ -2,7 +2,6 @@ require 'stubs.rb'
 require 'scores_table.rb'
 require 'weights.rb'
 require 'rulebase.rb'
-require 'rulebase.rb'
 
 # If set this flag will turn on debugging printouts
 #$debug = true;
