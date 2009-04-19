@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{fuzzy-realty}
-  s.version = "0.1.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan Neufeld"]
-  s.date = %q{2009-04-18}
+  s.date = %q{2009-04-19}
   s.email = %q{rkneufeld@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -20,7 +20,9 @@ Gem::Specification.new do |s|
     "lib/TODO",
     "lib/fuzzy_realty.rb",
     "lib/rulebase.rb",
+    "lib/scores_table.rb",
     "lib/stubs.rb",
+    "lib/weights.rb",
     "test/fuzzy_realty_test.rb",
     "test/test_helper.rb"
   ]
