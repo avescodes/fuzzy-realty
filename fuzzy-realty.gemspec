@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{fuzzy-realty}
-  s.version = "0.4.0"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan Neufeld"]
@@ -18,10 +18,10 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION.yml",
     "lib/TODO",
+    "lib/classes.rb",
     "lib/fuzzy_realty.rb",
     "lib/rulebase.rb",
     "lib/scores_table.rb",
-    "lib/stubs.rb",
     "lib/weights.rb",
     "test/fuzzy_realty_test.rb",
     "test/test_helper.rb"
