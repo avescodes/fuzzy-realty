@@ -1,6 +1,6 @@
 = fuzzy-realty
 
-Description goes here.
+A Fuzzy-search gem for a Real Estate website
 
 == Copyright
 

@@ -28,13 +28,24 @@ module FuzzyRealty
       end
       return scores.sort {|a,b| b[:score] <=> a[:score]}
     end
-    def self.performance(n=100_000)
-      puts "Benchmarking a complex search through #{n} random listings"
-      puts "=========================================================="
+    def self.performance
+      puts "Benchmarking search through 100,000-1 (powers of ten) random listings"
+      puts "======================================================================="
       listings = []
-      n.times { listings << Listing.random }
-      Benchmark.bmbm do |x|
-        x.report("#{n} listings:") { ExpertSystem.scores(listings,Query.random) }
+      100_000.times { listings << Listing.random }
+      puts "Generated #{listings.count} random listings"
+      Benchmark.bm do |x|
+        x.report("100,000 listings:") { ExpertSystem.scores(listings,Query.random) }
+        listings = listings[(0...10_000)]
+        x.report("10,000 listings:") { ExpertSystem.scores(listings,Query.random) }
+        listings = listings[(0...1_000)]
+        x.report("1,000 listings:") { ExpertSystem.scores(listings,Query.random) }
+        listings = listings[(0...100)]
+        x.report("100 listings:") { ExpertSystem.scores(listings,Query.random) }
+        listings = listings[(0...10)]
+        x.report("10 listings:") { ExpertSystem.scores(listings,Query.random) }
+        listings = listings[(0...1)]
+        x.report("1 listing:") { ExpertSystem.scores(listings,Query.random) }
       end
     end
   end
@@ -43,8 +54,8 @@ end
 #When running the library directly calculate an example
 if __FILE__ == $0
   listings = []
-  100.times do |i|
-    listings << FuzzyRealty::Listings.random
+  1000.times do |i|
+    listings << FuzzyRealty::Listing.random
   end
   
   query  = FuzzyRealty::Query.new
@@ -55,9 +66,9 @@ if __FILE__ == $0
 
   scores = FuzzyRealty::ExpertSystem.scores(listings,query)
   puts "Query 1, $250k Condominium in the prestiguous 'A' suburbs. 1575 sq. ft."
-  puts "Top 20 Listings:"
-  scores[(0..20)].each do |score| 
-    puts "%.2f" % score[:score] + "\t\t#{score[:listing].inspect}"
+  puts "Top 10 Listings:"
+  scores[(0...10)].each_with_index do |score,i| 
+    puts "(#{i+1})\t%.2f" % score[:score] + "\t#{score[:listing].inspect}"
   end
   
   puts "\n"
