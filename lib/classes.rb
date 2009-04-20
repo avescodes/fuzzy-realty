@@ -5,6 +5,14 @@ module FuzzyRealty
     def initialize(values={})
       values.each_key {|k| instance_variable_set(:"@#{k}", values[k])}
     end
+    def self.random
+      FuzzyRealty::Listing.new({
+        :price => 20_000 + rand(250_000),
+        :sqft => 300 + rand(2000),
+        :location => %W{A B C D}[rand(4)],
+        :style => %W{Bungalow Bi-level Split-level Two-story Condominium}[rand(5)]
+      })
+    end
   end
   class Query
     attr_reader :params
@@ -17,6 +25,17 @@ module FuzzyRealty
       end
       @params << param
 
+    end
+    def self.random
+      query = Query.new
+      query << Parameter.new(:price, 20_000 + rand(250_000),  [true,false][rand(1)])
+      query << Parameter.new(:sqft,  300 + rand(2000),        [true,false][rand(1)])
+      query << Parameter.new(:location, %W{A B C D}[rand(4)], [true,false][rand(1)])
+      query << Parameter.new(
+        :style,   
+        %W{Bungalow Bi-level Split-level Two-story Condominium}[rand(5)],
+        [true,false][rand(1)])
+      query
     end
   end
   
@@ -33,6 +52,7 @@ module FuzzyRealty
     def self.valid_types
       FuzzyRealty::WEIGHTS.each_key.to_a
     end
+
   end
 end
 

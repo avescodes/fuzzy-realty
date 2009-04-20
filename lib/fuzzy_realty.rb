@@ -1,3 +1,5 @@
+require 'benchmark'
+
 require 'weights.rb'
 require 'classes.rb'
 require 'scores_table.rb'
@@ -26,6 +28,15 @@ module FuzzyRealty
       end
       return scores.sort {|a,b| b[:score] <=> a[:score]}
     end
+    def self.performance(n=100_000)
+      puts "Benchmarking a complex search through #{n} random listings"
+      puts "=========================================================="
+      listings = []
+      n.times { listings << Listing.random }
+      Benchmark.bmbm do |x|
+        x.report("#{n} listings:") { ExpertSystem.scores(listings,Query.random) }
+      end
+    end
   end
 end
 
@@ -33,12 +44,7 @@ end
 if __FILE__ == $0
   listings = []
   100.times do |i|
-    listings << FuzzyRealty::Listing.new({
-      :price => 20_000 + rand(250_000),
-      :sqft => 300 + rand(2000),
-      :location => %W{A B C D}[rand(4)],
-      :style => %W{Bungalow Bi-level Split-level Two-story Condominium}[rand(5)]
-    })
+    listings << FuzzyRealty::Listings.random
   end
   
   query  = FuzzyRealty::Query.new
@@ -55,6 +61,7 @@ if __FILE__ == $0
   end
   
   puts "\n"
+  
   query  = FuzzyRealty::Query.new
   query << FuzzyRealty::Parameter.new(:price,99_000,true)
   query << FuzzyRealty::Parameter.new(:location,'C')
