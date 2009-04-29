@@ -49,12 +49,14 @@ module FuzzyRealty
 
   # Stub for testing without Rails project
   class Listing
-    attr_accessor :price, :sqft, :location, :style
+    attr_accessor :id, :price, :sqft, :location, :style
     def initialize(values={})
+      @@id ||=1
       values.each_key {|k| instance_variable_set(:"@#{k}", values[k])}
     end
     def self.random
       FuzzyRealty::Listing.new({
+        :id   => @@id += 1,
         :price => 20_000 + rand(250_000),
         :sqft => 300 + rand(2000),
         :location => %W{A B C D}[rand(4)],
