@@ -2,6 +2,7 @@ require 'rubygems'
 require 'ruby-prof'
 require 'fuzzy_realty.rb'
 
+if __FILE__ == $0
 RubyProf.start
 
 puts "Generating 10000 Listings"
@@ -46,3 +47,4 @@ result = RubyProf.stop
 
 printer = RubyProf::GraphHtmlPrinter.new(result)
 printer.print(STDOUT, :min_percent=>0)
+end

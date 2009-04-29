@@ -1,5 +1,3 @@
-require 'benchmark'
-
 require 'weights.rb'
 require 'classes.rb'
 require 'scores_table.rb'
@@ -33,6 +31,8 @@ end
 
 #When running the library directly calculate an example
 if __FILE__ == $0
+  require 'benchmark'
+
   listings = []
   1000.times do |i|
     listings << FuzzyRealty::Listing.random

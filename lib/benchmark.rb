@@ -1,5 +1,5 @@
 require 'fuzzy_realty.rb'
-
+if __FILE__ == $0
 puts "Benchmarking search through 100,000-1 (powers of ten) random listings"
 puts "======================================================================="
 listings = []
@@ -17,4 +17,5 @@ Benchmark.bm do |x|
   x.report("10 listings:") { FuzzyRealty::ExpertSystem.scores(listings,Query.random) }
   listings = listings[(0...1)]
   x.report("1 listing:") { FuzzyRealty::ExpertSystem.scores(listings,Query.random) }
+end
 end
